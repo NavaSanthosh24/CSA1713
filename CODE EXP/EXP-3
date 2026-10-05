@@ -1,0 +1,63 @@
+from collections import deque
+
+def water_jug(capacity1, capacity2, target):
+    queue = deque()
+    visited = set()
+
+    # Initial state
+    queue.append((0, 0, []))
+    visited.add((0, 0))
+
+    while queue:
+        x, y, path = queue.popleft()
+
+        # Check goal
+        if x == target or y == target:
+            path.append((x, y))
+            return path
+
+        states = []
+
+        # Fill Jug 1
+        states.append((capacity1, y))
+
+        # Fill Jug 2
+        states.append((x, capacity2))
+
+        # Empty Jug 1
+        states.append((0, y))
+
+        # Empty Jug 2
+        states.append((x, 0))
+
+        # Pour Jug 1 -> Jug 2
+        amount = min(x, capacity2 - y)
+        states.append((x - amount, y + amount))
+
+        # Pour Jug 2 -> Jug 1
+        amount = min(y, capacity1 - x)
+        states.append((x + amount, y - amount))
+
+        for state in states:
+            if state not in visited:
+                visited.add(state)
+                queue.append((state[0], state[1], path + [(x, y)]))
+
+    return None
+
+
+# Jug capacities
+jug1 = 4
+jug2 = 3
+
+# Required amount
+target = 2
+
+solution = water_jug(jug1, jug2, target)
+
+if solution:
+    print("Solution:")
+    for step, state in enumerate(solution):
+        print("Step", step, ":", state)
+else:
+    print("No solution exists.")

@@ -1,37 +1,38 @@
 
-def tsp_greedy(distance, start):
+def greedy_best_first_tsp(graph, start):
     current = start
-    visited = [start]
+    visited = {start}
+    route = [start]
     total_distance = 0
 
-    while len(visited) < len(distance):
-        nearest = None
-        min_distance = float('inf')
+    while len(visited) < len(graph):
+        # Select the nearest unvisited city
+        next_city = min(
+            (city for city in graph[current]
+             if city not in visited),
+            key=lambda city: graph[current][city]
+        )
 
-        for city in distance[current]:
-            if city not in visited:
-                if distance[current][city] < min_distance:
-                    min_distance = distance[current][city]
-                    nearest = city
-
-        total_distance += min_distance
-        current = nearest
-        visited.append(current)
+        total_distance += graph[current][next_city]
+        current = next_city
+        visited.add(current)
+        route.append(current)
 
     # Return to the starting city
-    total_distance += distance[current][start]
-    visited.append(start)
+    total_distance += graph[current][start]
+    route.append(start)
 
-    print("Route:", " -> ".join(visited))
+    print("Route:", " -> ".join(route))
     print("Total Distance:", total_distance)
 
 
 # Distance between cities
-distance = {
+graph = {
     'A': {'B': 10, 'C': 15, 'D': 20},
     'B': {'A': 10, 'C': 35, 'D': 25},
     'C': {'A': 15, 'B': 35, 'D': 30},
     'D': {'A': 20, 'B': 25, 'C': 30}
 }
 
-tsp_greedy(distance, 'A')
+greedy_best_first_tsp(graph, 'A')
+

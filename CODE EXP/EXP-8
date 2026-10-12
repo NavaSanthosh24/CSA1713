@@ -1,0 +1,30 @@
+
+def dfs(graph, node, visited):
+    # Mark the current node as visited
+    visited.add(node)
+
+    # Display the current node
+    print(node, end=" ")
+
+    # Visit all unvisited neighboring nodes
+    for neighbor in graph[node]:
+        if neighbor not in visited:
+            dfs(graph, neighbor, visited)
+
+
+# Define the graph
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F'],
+    'D': [],
+    'E': [],
+    'F': []
+}
+
+# Create an empty visited set
+visited = set()
+
+# Start DFS from node A
+print("DFS Traversal:")
+dfs(graph, 'A', visited)

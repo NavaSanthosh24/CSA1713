@@ -1,0 +1,28 @@
+
+# Program to check whether a bird can fly or not
+
+def can_fly(bird):
+    flying_birds = ["sparrow", "parrot", "pigeon", "eagle", "crow"]
+    flightless_birds = ["penguin", "ostrich", "kiwi"]
+
+    if bird.lower() in flying_birds:
+        return True
+    elif bird.lower() in flightless_birds:
+        return False
+    else:
+        return None
+
+
+# Required queries
+queries = ["parrot", "penguin", "eagle", "ostrich"]
+
+for bird in queries:
+    result = can_fly(bird)
+
+    if result is True:
+        print(bird.capitalize(), "can fly.")
+    elif result is False:
+        print(bird.capitalize(), "cannot fly.")
+    else:
+        print("Information about", bird, "is not available.")
+
